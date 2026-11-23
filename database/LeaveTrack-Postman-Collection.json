@@ -1,0 +1,163 @@
+{
+  "info": {
+    "name": "LeaveTrack - Employee Leave Management System APIs",
+    "description": "Complete Postman REST API Collection for LeaveTrack Spring Boot 3 & JWT",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Login - Employee",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alex@leavetrack.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "http://localhost:8080/api/auth/login"
+          }
+        },
+        {
+          "name": "Login - Manager",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"manager@leavetrack.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "http://localhost:8080/api/auth/login"
+          }
+        },
+        {
+          "name": "Login - Admin",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@leavetrack.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "http://localhost:8080/api/auth/login"
+          }
+        },
+        {
+          "name": "Register New Employee",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"employeeId\": \"EMP105\",\n  \"firstName\": \"Robert\",\n  \"lastName\": \"Taylor\",\n  \"email\": \"robert@leavetrack.com\",\n  \"password\": \"password123\",\n  \"phone\": \"+1-555-0105\",\n  \"department\": \"Engineering\",\n  \"role\": \"ROLE_EMPLOYEE\",\n  \"managerId\": 2\n}"
+            },
+            "url": "http://localhost:8080/api/auth/register"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Leave Balances",
+      "item": [
+        {
+          "name": "Get My Balances",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "http://localhost:8080/api/balances/my-balances"
+          }
+        },
+        {
+          "name": "Get Employee Balances (Manager/Admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "http://localhost:8080/api/balances/employee/3"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Leave Requests",
+      "item": [
+        {
+          "name": "Apply for Leave",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"leaveTypeId\": 1,\n  \"startDate\": \"2026-12-15\",\n  \"endDate\": \"2026-12-16\",\n  \"reason\": \"Attending family function\"\n}"
+            },
+            "url": "http://localhost:8080/api/leaves/apply"
+          }
+        },
+        {
+          "name": "Get My Leaves History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "http://localhost:8080/api/leaves/my-leaves"
+          }
+        },
+        {
+          "name": "Get Pending Leaves (Manager)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "http://localhost:8080/api/leaves/manager/pending"
+          }
+        },
+        {
+          "name": "Review Leave (Approve/Reject)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"APPROVED\",\n  \"comment\": \"Approved. Enjoy your time off!\"\n}"
+            },
+            "url": "http://localhost:8080/api/leaves/1/review"
+          }
+        },
+        {
+          "name": "Cancel Pending Leave",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "http://localhost:8080/api/leaves/1/cancel"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Reports & Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "http://localhost:8080/api/reports/dashboard"
+          }
+        },
+        {
+          "name": "Get Monthly Utilization Report",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwt_token}}" }],
+            "url": "http://localhost:8080/api/reports/monthly?year=2026"
+          }
+        }
+      ]
+    }
+  ]
+}
