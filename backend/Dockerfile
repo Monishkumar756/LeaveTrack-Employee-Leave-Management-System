@@ -17,8 +17,8 @@ WORKDIR /app
 # Copy the built JAR from stage 1
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose the port Railway will map
+# Expose port (Render sets $PORT dynamically, defaults to 8080)
 EXPOSE 8080
 
-# Start Spring Boot
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run with memory constraints optimized for Render Free Tier (512MB RAM)
+ENTRYPOINT ["java", "-XX:+UseSerialGC", "-Xss512k", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]
