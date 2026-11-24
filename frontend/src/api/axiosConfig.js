@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+// In production (Vercel), REACT_APP_API_URL is set to your Railway backend URL.
+// In development (local), it falls back to http://localhost:8080/api
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
